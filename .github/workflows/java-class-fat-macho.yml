@@ -1,0 +1,23 @@
+name: FAT Mach-O / Java class detection
+
+on:
+  push:
+    branches:
+      - fix/java-class-fat-macho-detection-211
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Formatting
+        run: rustfmt --edition 2021 --check apple-codesign/src/reader.rs
+      - name: Test Mach-O detection
+        run: cargo test --locked -p apple-codesign --no-default-features --lib macho_detection_tests -- --nocapture
