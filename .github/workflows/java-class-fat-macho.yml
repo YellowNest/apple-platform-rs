@@ -21,3 +21,5 @@ jobs:
         run: rustfmt --edition 2021 --check apple-codesign/src/reader.rs
       - name: Test Mach-O detection
         run: cargo test --locked -p apple-codesign --no-default-features --lib macho_detection_tests -- --nocapture
+      - name: Full apple-codesign library suite
+        run: cargo test --locked -p apple-codesign --no-default-features --lib
